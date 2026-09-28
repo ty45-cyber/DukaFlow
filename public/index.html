@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#080b09"/>
+  <meta name="description" content="DukaFlow turns a spoken business purchase into a verified transaction."/>
+  <title>DukaFlow — Say it. We check it. You confirm.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+  <div class="app-shell" id="top">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="DukaFlow home">
+        <span class="brand-mark">df</span>
+        <span class="brand-word">DukaFlow</span>
+      </a>
+
+      <div class="progress-nav" aria-label="Transaction stages">
+        <span class="progress-step active" data-stage-label="say"><i>1</i> Say it</span>
+        <span class="progress-line"></span>
+        <span class="progress-step" data-stage-label="check"><i>2</i> We check it</span>
+        <span class="progress-line"></span>
+        <span class="progress-step" data-stage-label="confirm"><i>3</i> You confirm</span>
+      </div>
+
+      <div class="topbar-actions">
+        <span class="trust-pill"><span class="shield-dot"></span> No evidence · no execution</span>
+        <button id="resetBtn" class="ghost-btn" type="button">Reset</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <div class="hero-copy">
+          <div class="eyebrow-row">
+            <span class="eyebrow">VOICE PROCUREMENT FOR REPEAT PURCHASES</span>
+            <span class="beta-pill">LIVE DEMO</span>
+          </div>
+          <h1>Say it.<br><span>We check it.</span><br>You confirm.</h1>
+          <p class="hero-text">Tell DukaFlow what you need the same way you would tell a supplier. It resolves the product, checks today’s stock and price, then waits for a clear “yes” before the order can exist.</p>
+
+          <div class="hero-actions">
+            <button id="heroTalkBtn" class="primary-cta" type="button">
+              <span class="cta-mic" aria-hidden="true"><span></span></span>
+              <span>Tap to talk</span>
+              <small>AssemblyAI voice</small>
+            </button>
+            <button id="demoBtn" class="secondary-cta" type="button">
+              <span class="play-icon" aria-hidden="true">▶</span>
+              <span>Run 60-sec walkthrough</span>
+            </button>
+          </div>
+
+          <div class="prompt-block">
+            <div class="prompt-label">Try saying</div>
+            <div class="quick-examples">
+              <button class="example-chip" data-prompt="I need three bottles of SunGold Cooking Oil 3L. Deliver to Westlands.">“Three SunGold 3L to Westlands.”</button>
+              <button class="example-chip" data-prompt="Give me two packets of Pembe and one Blue Band.">“Two Pembe and one Blue Band.”</button>
+              <button class="example-chip warning-example" data-prompt="I need the big SunGold. Three.">“The big SunGold. Three.”</button>
+            </div>
+            <p class="prompt-note"><span class="tiny-check">✓</span> Ambiguous requests are stopped and clarified — never guessed.</p>
+          </div>
+        </div>
+
+        <aside class="voice-stage" id="voiceStage" aria-label="DukaFlow voice control">
+          <div class="voice-stage-head">
+            <div>
+              <span class="stage-label">CUSTOMER MODE</span>
+              <h2 id="voiceHeadline">Tell me what to buy.</h2>
+            </div>
+            <span class="live-state" id="sessionLabel">Ready</span>
+          </div>
+
+          <div class="voice-visual">
+            <div class="sound-ring ring-1"></div>
+            <div class="sound-ring ring-2"></div>
+            <div class="sound-ring ring-3"></div>
+            <button id="connectBtn" class="voice-button" type="button" aria-label="Start voice shopping">
+              <span class="mic-icon" aria-hidden="true"><span></span><i></i></span>
+              <strong id="voiceButtonText">Tap to talk</strong>
+              <small id="voiceButtonSub">Speak naturally</small>
+            </button>
+          </div>
+
+          <div class="voice-caption" id="voiceHint">Try: “Three SunGold 3L to Westlands.”</div>
+          <div class="voice-footer">
+            <span class="status-indicator"><i></i><span id="miniStatus">Mic off · Your turn starts the conversation</span></span>
+            <button id="muteBtn" class="mini-control" type="button" disabled>Mute</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="principles-section" aria-label="How DukaFlow works">
+        <article class="principle active-principle">
+          <div class="principle-number">01</div>
+          <div><h3>Say it</h3><p>Natural language. No product menus to learn.</p></div>
+        </article>
+        <article class="principle">
+          <div class="principle-number">02</div>
+          <div><h3>We check it</h3><p>Catalog, variant, stock, price and delivery are revalidated.</p></div>
+        </article>
+        <article class="principle">
+          <div class="principle-number">03</div>
+          <div><h3>You confirm</h3><p>The transaction stays blocked until intent is explicit.</p></div>
+        </article>
+      </section>
+
+      <section class="workspace-section" id="workspace">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">LIVE TRANSACTION</span>
+            <h2>See the order form itself — not just a chatbot.</h2>
+          </div>
+          <div class="merchant-chip"><span class="merchant-avatar">KF</span><span>Kisumu Fresh Mart</span><span class="merchant-live-dot"></span></div>
+        </div>
+
+        <div class="workflow-grid">
+          <section class="card conversation-card">
+            <div class="card-head">
+              <div><span class="card-kicker">01 · SAY IT</span><h3>What DukaFlow heard</h3></div>
+              <span class="live-badge" id="conversationBadge">Idle</span>
+            </div>
+            <div class="conversation-meta"><span id="turnCount">0 turns</span><span>Voice transcript</span></div>
+            <div id="transcript" class="transcript">
+              <div class="transcript-empty">
+                <div class="empty-orb">◎</div>
+                <strong>Your voice will appear here.</strong>
+                <span>Use the mic or run the walkthrough to see the full transaction flow.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="card verification-card">
+            <div class="card-head">
+              <div><span class="card-kicker">02 · WE CHECK IT</span><h3>What is true right now</h3></div>
+              <span class="preview-state" id="previewState">Waiting</span>
+            </div>
+
+            <div id="resolutionPanel" class="resolution-panel resolution-empty">
+              <div class="resolution-icon">◌</div>
+              <strong>Nothing resolved yet</strong>
+              <span>When you speak, product matches and live checks show up here.</span>
+            </div>
+
+            <div class="reality-strip" id="realityStrip">
+              <div class="reality-item"><span class="reality-icon">✓</span><div><strong>Catalog</strong><small id="catalogState">Waiting</small></div></div>
+              <div class="reality-item"><span class="reality-icon">◈</span><div><strong>Stock</strong><small id="stockState">Waiting</small></div></div>
+              <div class="reality-item"><span class="reality-icon">₵</span><div><strong>Price</strong><small id="priceState">Waiting</small></div></div>
+              <div class="reality-item"><span class="reality-icon">⌖</span><div><strong>Delivery</strong><small id="deliveryState">Waiting</small></div></div>
+            </div>
+
+            <div class="cart-preview" id="cartPreview">
+              <div class="cart-empty"><strong>Order candidate is empty.</strong><span>Say what you need and we’ll build it from verified data.</span></div>
+            </div>
+          </section>
+        </div>
+
+        <section class="card confirmation-card" id="confirmationCard">
+          <div class="confirmation-top">
+            <div>
+              <span class="card-kicker">03 · YOU CONFIRM</span>
+              <h3>Nothing consequential happens silently.</h3>
+              <p id="gateMsg">DukaFlow will show the exact transaction and ask for an explicit confirmation before creating the order.</p>
+            </div>
+            <div class="lock-badge" id="lockBadge"><span>●</span> Locked</div>
+          </div>
+
+          <div class="gate-body">
+            <div class="gate-progress-block">
+              <div class="gate-progress-head"><span>Evidence gate</span><strong id="gateProgressText">0 / 5</strong></div>
+              <div class="gate-progress"><span id="gateProgressBar"></span></div>
+              <div class="gate-items" id="gateItems">
+                <span>○ Product</span><span>○ Variant</span><span>○ Quantity</span><span>○ Destination</span><span>○ Authorization</span>
+              </div>
+            </div>
+            <div class="proof-callout">
+              <span class="proof-icon">✓</span>
+              <div><strong>Why was this allowed?</strong><span id="proofText">Each consequential field must trace back to customer intent plus live business state.</span></div>
+            </div>
+          </div>
+
+          <div class="confirmation-actions" id="confirmationActions">
+            <span class="confirmation-status" id="confirmationStatus">Awaiting a complete, explicit confirmation.</span>
+            <button id="demoConfirmBtn" class="demo-confirm-btn" type="button" hidden>Confirm in walkthrough</button>
+          </div>
+        </section>
+
+        <section class="card completion-card" id="completionCard" hidden>
+          <div class="completion-icon">✓</div>
+          <div class="completion-copy">
+            <span class="card-kicker">TRANSACTION CREATED</span>
+            <h3 id="completionTitle">Order created.</h3>
+            <p id="completionMessage">Stock is reserved and the payment boundary is still explicit.</p>
+          </div>
+          <div class="completion-summary" id="completionSummary"></div>
+        </section>
+      </section>
+
+      <section class="merchant-section">
+        <div class="section-head compact-head">
+          <div><span class="section-kicker">MERCHANT VIEW</span><h2>Operational proof after the voice interaction.</h2></div>
+          <span class="merchant-note">Live local state · sandbox payment boundary</span>
+        </div>
+        <div class="merchant-grid">
+          <section class="card metrics-card">
+            <div class="metric-head"><span>DUKAFLOW PERFORMANCE</span><span class="metric-live">LIVE</span></div>
+            <div class="metrics-grid">
+              <div class="metric-row"><span>Orders today</span><strong id="mOrders">0</strong></div>
+              <div class="metric-row"><span>Paid orders</span><strong id="mPaid">0</strong></div>
+              <div class="metric-row"><span>Units in stock</span><strong id="mStock">0</strong></div>
+              <div class="metric-row accent-metric"><span>Gate blocks</span><strong id="mBlocks">0</strong></div>
+            </div>
+          </section>
+
+          <section class="card orders-card">
+            <div class="card-head"><div><span class="card-kicker">RECENT TRANSACTIONS</span><h3>Latest orders</h3></div><span class="pill" id="orderCount">0 orders</span></div>
+            <div class="orders" id="orders"><div class="orders-empty">No orders yet.</div></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="proof-section card">
+        <div class="section-head compact-head">
+          <div><span class="section-kicker">PROOF TRAIL</span><h2>Why the system allowed or blocked an action.</h2></div>
+          <span class="proof-target">Target · 0 unauthorized executions</span>
+        </div>
+        <div id="audit" class="auditlog"><div class="orders-empty">Your transaction trace will appear here.</div></div>
+      </section>
+    </main>
+
+    <footer><span>DukaFlow</span> · Built for the AssemblyAI Voice Agent Challenge · Payment is explicitly sandboxed in this demo.</footer>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
